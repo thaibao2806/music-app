@@ -1,0 +1,560 @@
+:root {
+  --primary-color: #ec1f55;
+  --text-color: #333;
+  --background-color: #eef3db;
+  /* font-family: 'Nunito', sans-serif; */
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@font-face {
+  font-family: "Quicksand Bold";
+  src: url('../fonts/Quicksand/static/Quicksand-Bold.ttf');
+}
+
+@font-face {
+  font-family: "Quicksand Light";
+  src: url('../fonts/Quicksand/static/Quicksand-Light.ttf');
+}
+
+@font-face {
+  font-family: "Quicksand Medium";
+  src: url('../fonts/Quicksand/static/Quicksand-Medium.ttf');
+}
+
+@font-face {
+  font-family: "Quicksand Regular";
+  src: url('../fonts/Quicksand/static/Quicksand-Regular.ttf');
+}
+
+@font-face {
+  font-family: "Quicksand Semi-Bold";
+  src: url('../fonts/Quicksand/static/Quicksand-SemiBold.ttf');
+}
+
+body {
+  background: linear-gradient(90deg, rgba(241, 187, 10, 0.534), rgba(34, 216, 216, 0.308), rgba(121, 38, 27, 0.452));
+  background-size: 300% 100%;
+  background-position: 0% 50%;
+  /* animation: gradientAnimation 8s linear infinite; */
+  background-attachment: fixed;
+  font-family: 'Quicksand Regular', sans-serif;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+html {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
+}
+
+.background-layer {
+  position: relative;
+}
+
+.player {
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.player .icon-pause {
+  display: none;
+}
+
+.player.playing .icon-pause {
+  display: inline-block;
+}
+
+.player.playing .icon-play {
+  display: none;
+}
+
+.dashboard {
+  padding: 16px;
+  position: relative;
+  z-index: 6;
+  top: 0;
+  width: 100%;
+  height: 390px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.61);
+  box-shadow: 0px -8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.scroll-top-btn {
+  text-align: center;
+  font-size: 50px;
+  margin-top: 10px;
+  padding: 20px 20px;
+  color: rgba(133, 133, 133, 0.178);
+  position: fixed;
+  bottom: 30px;
+  z-index: 555;
+  cursor: pointer;
+  display: none;
+}
+
+/* CD Thumbnail*/
+.cd {
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px;
+}
+
+.cd.cd-play .cd-thumb,
+.cd.cd-play .cd-thumb img {
+  height: 240px;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.cd-thumb {
+  cursor: pointer;
+  width: 80%;
+  margin: auto;
+  height: 180px;
+  margin-top: 35px;
+  /* margin-bottom: -10px; */
+  border-radius: 7px;
+  background-color: #333;
+  background-size: cover;
+  background-position: center 10%;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+}
+
+.cd-thumb img {
+  cursor: pointer;
+  width: 100%;
+  height: 180px;
+  border-radius: 7px;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+/* CONTROL */
+.control-container {
+  background-color: #FBFDFD;
+  border-bottom: 1px solid #ebebeb;
+  padding-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* position: sticky; */
+  z-index: 2;
+  top: 0;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0px -6px 15px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.control {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0px 0px 0px;
+  cursor: pointer;
+}
+
+.control .btn {
+  color: black;
+  padding: 18px;
+  font-size: 18px;
+  border-radius: 50%;
+  width: 15%;
+  display: flex;
+  justify-content: center;
+}
+
+.control .btn.active {
+  color: var(--primary-color);
+}
+
+.control .btn-toggle-play {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  font-size: 40px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  padding: 35px;
+}
+
+.control .btn-next,
+.control .btn-prev {
+  font-size: 26px;
+}
+
+.control .btn-repeat,
+.control .btn-random {
+  font-size: 20px;
+  padding: 21px;
+}
+
+.btn-prev,
+.btn-next {
+  display: flex;
+  align-items: center;
+}
+
+/* PROGRESS */
+.timer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.progress-area {
+  height: 7px;
+  width: 73%;
+  background: #bdbdbd6b;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.progress-area.area-play {
+  height: 7px;
+  width: 95%;
+  background: #bdbdbd6b;
+  cursor: pointer;
+  margin: 5px;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.progress-area::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 61.5%;
+  height: 40px;
+  width: 73%;
+  right: -5px;
+  padding-bottom: 3px;
+  z-index: 2;
+}
+
+.progress-area.area-play.progress-area::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 65.7%;
+  height: 40px;
+  width: 92%;
+  right: -5px;
+  padding-bottom: 3px;
+  z-index: 2;
+}
+
+.progress-area .progress-bar {
+  height: inherit;
+  width: 0%;
+  position: relative;
+  border-radius: 3px;
+  background-color: rgb(0, 0, 0);
+}
+
+.song-timer span {
+  font-size: 13px;
+  color: var(--lightblack);
+}
+
+.song-timer {
+  display: flex;
+  justify-content: space-between;
+  width: 73%;
+  transition: all 0.3s ease;
+  font-family: 'Quicksand Medium', sans-serif;
+}
+
+.progress-area.area-play~.song-timer {
+  width: 95%;
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  width: 100%;
+  transition: all 0.2s ease;
+  margin-bottom: 25px;
+}
+
+.header-title h2 {
+  color: black;
+  font-size: 21px;
+  padding-bottom: 5px;
+  font-family: 'Quicksand Semi-Bold', sans-serif;
+}
+
+.header-title h4 {
+  color: rgb(105, 104, 104);
+  font-size: 12px;
+  font-family: 'Quicksand Light', sans-serif;
+}
+
+/* VOLUME */
+.lyrics-vol-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.progress-vol-area {
+  height: 7px;
+  width: 32%;
+  background: rgba(107, 107, 107, 0.116);
+  cursor: pointer;
+  margin: 10px 10px;
+  border-radius: 5px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.progress-vol-area::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -15px;
+  height: 30px;
+  width: 130%;
+  background-color: transparent;
+  right: -5px;
+  padding-bottom: 3px;
+  z-index: 2;
+}
+
+.progress-vol-bar-container {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+}
+
+.progress-vol-area .progress-vol-bar {
+  height: inherit;
+  width: 0%;
+  position: relative;
+  border-radius: 5px;
+  background-color: rgb(0, 0, 0);
+}
+
+.progress-vol-area:hover .progress-vol-bar::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.btn-vol{
+  position: absolute;
+  left: 125px;
+  top: 533px;
+}
+
+/* LYRICS */
+.lyrics-show-btn {
+  background-color: transparent;
+  width: 96px;
+  display: block;
+  cursor: pointer;
+}
+
+.lyrics-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(107, 107, 107, 0.116);
+  color: rgb(0, 0, 0);
+  padding: 5px;
+  border-radius: 0px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  font-family: 'Quicksand Regular', sans-serif;
+}
+
+.lyrics-btn:hover {
+  background-color: rgba(0, 0, 0, 0.137);
+  color: rgb(0, 0, 0);
+}
+
+.lyrics-btn p {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* PLAYLIST */
+.playlist {
+  padding: 10px 16px 14px;
+  margin-top: 10px;
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.61);
+  border-radius: 8px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  width: 100%;
+}
+
+.song-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+
+.lyrics {
+  height: auto;
+  overflow: hidden;
+  width: 100%;
+  font-family: 'Quicksand Regular', sans-serif;
+}
+
+.lyrics.active {
+  border-top: 1px solid rgba(185, 185, 185, 0.24);
+  width: 100%;
+  display: block;
+  width: 100%;
+  height: 33px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.playlist .expanded .lyrics {
+  max-height: 8000px;
+  transition: all 0.4s ease;
+}
+
+.lyrics.active.expanded {
+  max-height: 8000px;
+}
+
+.up-next {
+  font-size: 22px;
+  font-family: 'Quicksand Semi-Bold', sans-serif;
+  padding-bottom: 10px;
+  color: black;
+}
+
+.song {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  line-height: 20px;
+  background-color: rgba(255, 255, 255, 0.295);
+  padding: 10px 14px;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all ease-in 0.1s;
+  position: relative;
+  z-index: 1;
+}
+
+.song:last-child {
+  margin-bottom: 0;
+}
+
+.song.active {
+  background-color: rgb(255, 255, 255);
+
+}
+
+.song.active .option,
+.song.active .author,
+.song.active .title {
+  color: black;
+  line-height: 20px;
+}
+
+.song .thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+.song .body {
+  flex: 1;
+  padding: 0 13px;
+  margin-top: 3px;
+}
+
+.song .title {
+  font-size: 18px;
+  color: black;
+  font-family: 'Quicksand Semi-Bold', sans-serif;
+}
+
+.song .author {
+  font-size: 12px;
+  color: rgb(134, 134, 134);
+  font-family: 'Quicksand Medium', sans-serif;
+}
+
+.song .option {
+  color: black;
+  font-size: 22px;
+  display: none;
+  font-family: 'Quicksand Medium', sans-serif;
+}
+
+.song .option img {
+  width: 50px;
+  height: 50px;
+  margin: 0 -10px 0 0;
+}
+
+.song .option.active {
+  display: block;
+  color: black !important;
+}
+
+.song .song-duration {
+  font-size: 15px;
+}
